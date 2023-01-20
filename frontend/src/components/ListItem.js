@@ -6,3 +6,5 @@ const ListItem = ({note}) => {
         <Link to={`/${note.id}`}>{note.body}</Link>
     )
 }
+
+export default ListItem

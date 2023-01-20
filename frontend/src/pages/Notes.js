@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import ListItem from '..components/ListItem'
-
-let dummy = [{"id":"1", "body":"Start app" }, {"id":"2", "body":"Learn js" }, {"id":"3", "body":"Read manga lol"}]
+import ListItem from '../components/ListItem'
 
 const Notes = () => {
-    let [notes, setNotes] = useState(dummy)
+    let [notes, setNotes] = useState([])
+
+    useEffect(() => { getNotes()}, [])
+
+    let getNotes = async () => {
+        let response = await fetch('/notes')
+        let data = await response.json()
+        setNotes(data)
+    }
 
     return (
         <div>
@@ -18,3 +24,5 @@ const Notes = () => {
         </div>
     )
 }
+
+export default Notes
