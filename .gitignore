@@ -1,0 +1,13 @@
+# IDE files
+.idea
+
+# Environments
+.venv
+venv/
+
+# .env
+*.env
+
+# React items
+frontend/README.md
+frontend/node-modules
