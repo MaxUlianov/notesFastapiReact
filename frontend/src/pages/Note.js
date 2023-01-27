@@ -6,8 +6,6 @@ const Note = () => {
     let params = useParams()
     let noteId = params.id
 
-    // let noteItem = dummy.find((note) => note.id === noteId)
-
     let getNote = async () => {
         let response = await fetch(`/notes/${noteId}`)
         let data = await response.json()  
@@ -30,6 +28,16 @@ const Note = () => {
             method = 'PUT'
         }
 
+        let noteBody = note?.body
+            if (noteBody !== undefined){
+            noteBody = String(noteBody).trim()
+        }
+
+        if(noteBody === '' || noteBody === undefined){
+            alert('Note cannot be empty.')
+            return 
+        }
+
         await fetch(url, { method:method, headers:{
             'Content-Type':'application/json'},
             body:JSON.stringify({"body":note.body})
@@ -45,13 +53,20 @@ const Note = () => {
     }
 
     return (
-        <div>
-            <Link to={'/'}>Go Back</Link>{noteId !== 'add' && (<button onClick={deleteNote}>Delete</button>)}
+        <div className='note'>
+            <div className='note-header'>
+                <Link to={'/'}>
+                    Go Back
+                </Link>
+                {noteId !== 'add' && (<button onClick={deleteNote}>Delete</button>)}
+            </div>
+
             <textarea onChange={(e) => {setNote({...note, "body":e.target.value})}} 
-            value={note?.body} 
-            placeholder="Add note...">
+            value={note?.body} required
+            placeholder="Write note...">
             </textarea>
-            <button onClick={submitData}>Save</button>
+
+            <button onClick={submitData} className='floating-button'>Save</button>
 
         </div>
     )

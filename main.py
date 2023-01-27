@@ -1,8 +1,11 @@
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
-from db import db, query
+
+from db import get_db, get_entries
+from bson.objectid import ObjectId
 
 app = FastAPI()
+db = get_db()
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,38 +18,45 @@ app.add_middleware(
 
 @app.get("/notes")
 def get_notes():
-    notes = db.all()
-    return notes
+    notes = db['notes']
+
+    return get_entries(notes)
 
 
 @app.post("/notes")
 def add_notes(data=Body()):
-    db.insert(data)
-    notes = db.all()
-    return notes
+    notes = db['notes']
+    notes.insert_one({"body": data})
+
+    return get_entries(notes)
 
 
 @app.get("/notes/{note_id}")
 def get_note(note_id):
-    note = db.get(doc_id=note_id)
+    notes = db['notes']
+    notes.find_one({'_id': ObjectId(note_id)})
 
-    return note
+    return get_entries(notes)
 
 
 @app.put("/notes/{note_id}")
 def update_note(note_id, data=Body()):
+    notes = db['notes']
+    notes.update_one({'_id': ObjectId(note_id)}, {"$set": {"body": data}}, upsert=False)
 
-    db.update(data, doc_ids=note_id)
-    notes = db.all()
-    return notes
+    return get_entries(notes)
 
 
 @app.delete("/notes/{note_id}")
 def delete_note(note_id):
-    db.remove(doc_ids=note_id)
-    notes = db.all()
-    return notes
+    notes = db['notes']
+    notes.delete_one({'_id': ObjectId(note_id)})
+
+    return get_entries(notes)
 
 
 if __name__ == '__main__':
-    print(db.all())
+    print(db['notes'])
+
+
+# uvicorn main:app --reload
