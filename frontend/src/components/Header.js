@@ -2,9 +2,13 @@ import React from 'react'
 
 const Header = () => {
     return (
-        <div className="app-header">
-            <h1>Notes</h1>
-        </div>
+        <nav className="navbar has-background-primary has-shadow">
+            <div className="navbar-brand">
+                <div className="navbar-item">
+                    <div className="title is-4" Style="color: white;">Notes App</div>
+                </div>
+            </div>
+        </nav>
     )
 }
 

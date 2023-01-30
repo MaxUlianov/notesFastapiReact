@@ -1,4 +1,4 @@
-import './App.css';
+import './bulma.css'
 
 import {
   BrowserRouter as Router,

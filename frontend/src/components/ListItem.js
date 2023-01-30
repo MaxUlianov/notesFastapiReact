@@ -17,8 +17,10 @@ let trimmedContent = (note) => {
 const ListItem = ({note}) => {
     return (
       <Link to={`/${note.id}`}>
-        <div className="notes-list-item">
-          <h3>{trimmedContent(note)}</h3>
+        <div className="box" Style="margin-top: 1rem;">
+          <h3>
+            <div class="title is-6">{trimmedContent(note)}</div>
+          </h3>
           <p><span>{getTimestamp(note)}</span></p>
         </div>
       </Link>

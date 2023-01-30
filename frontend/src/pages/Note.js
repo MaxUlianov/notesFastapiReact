@@ -10,12 +10,12 @@ const Note = () => {
         let response = await fetch(`/notes/${noteId}`)
         let data = await response.json()  
         setNote(data)
-    }
+    };
 
     let [note, setNote] = useState(null)
     useEffect(() => {
         if(noteId !== 'add') getNote()
-    }, [noteId])
+    }, [noteId]);
 
     let submitData = async (e) => {
         e.preventDefault()
@@ -53,20 +53,30 @@ const Note = () => {
     }
 
     return (
-        <div className='note'>
-            <div className='note-header'>
-                <Link to={'/'}>
-                    Go Back
-                </Link>
-                {noteId !== 'add' && (<button onClick={deleteNote}>Delete</button>)}
+        <div className="block">
+            <div className="navbar" Style="margin-top: 1rem; margin-bottom: 1rem; padding-left: 0rem; padding-right: 0rem;">
+                <div class="navbar-item" Style="padding-left: 0rem;">
+                    <Link to={'/'}>
+                        <div className="button is-primary is-outlined">Go Back</div>
+                    </Link>
+                </div>
+                    
+                <div className="navbar-end">
+                    <div className="navbar-item" Style="padding-right: 0rem;">
+                        {noteId !== 'add' && (<button className="button is-danger is-light" onClick={deleteNote}>Delete</button>)}
+                    </div>
+                </div>
             </div>
 
-            <textarea onChange={(e) => {setNote({...note, "body":e.target.value})}} 
-            value={note?.body} required
-            placeholder="Write note...">
-            </textarea>
+            <div className="field">
 
-            <button onClick={submitData} className='floating-button'>Save</button>
+                <textarea class="textarea is-primary" onChange={(e) => {setNote({...note, "body":e.target.value})}} 
+                value={note?.body} required
+                placeholder="Write note...">
+                </textarea>
+
+                <button className="button is-primary" Style="margin-top: 1rem;" onClick={submitData}>Save</button>
+            </div>
 
         </div>
     )

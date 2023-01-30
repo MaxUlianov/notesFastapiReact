@@ -3,8 +3,8 @@ import Header from './Header'
 
 const Layout = (props) => {
     return (
-        <div className="container dark">
-            <div className="app">
+        <div className="container" Style="margin-top: 2rem;">
+            <div className="box">
                 <Header/>
                 {props.children}
             </div>

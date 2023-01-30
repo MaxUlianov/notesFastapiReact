@@ -13,7 +13,7 @@ def get_db():
 
 
 def get_entries(collection):
-    return [note["body"] for note in collection.find()]
+    return [note for note in collection.find()]
 
 
 if __name__ == '__main__':
